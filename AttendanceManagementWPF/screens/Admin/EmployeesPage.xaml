@@ -1,0 +1,237 @@
+﻿<Page x:Class="AttendanceManagementWPF.EmployeesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AttendanceManagementWPF"
+      mc:Ignorable="d" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+      Title="EmployeesPage">
+
+    <Grid>
+
+        <ScrollViewer>
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid
+            Background="#022B3A">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Employees"
+               Foreground="White"
+                   VerticalContentAlignment="Center"
+               FontSize="18"/>
+
+                    <Grid
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Margin="12 0 12 0"
+                        HorizontalAlignment="Center"
+                        Width="180">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <materialDesign:PackIcon
+                                Grid.Column="0"
+                                VerticalAlignment="Bottom"
+                                Kind="Search"
+                            Foreground="White"
+                                Width="18"
+                                Margin="0 0 0 0"
+                                Height="18"/>
+
+                        <TextBox                                     
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                    x:Name="txtSearchEmployee"
+                                Grid.Column="1"
+                            FontWeight="Medium"
+                            Padding="6 0 6 0"
+                            Foreground="White"
+                            materialDesign:TextFieldAssist.UnderlineBrush="White"
+                            TextChanged="txtSearchEmployee_TextChanged"
+                            materialDesign:HintAssist.Hint="Search"
+                            materialDesign:HintAssist.Foreground="White"
+                            FontSize="12">
+                            
+                        </TextBox>
+                    </Grid>
+
+                    <Button 
+                Grid.Column="2"
+                x:Name="btnAddEmployee"
+                Content="Add Employee +"
+                        Margin="0 0 12 0"
+                Padding="12 0 12 0"
+                FontSize="18"
+                        Visibility="Visible"
+                HorizontalAlignment="Right"
+                BorderThickness="0"
+                FontWeight="Medium"
+                Background="White"
+                Foreground="Black"
+                Style="{StaticResource MaterialDesignFlatAccentBgButton}" 
+                Click="btnAddEmployee_Click"/>
+
+                </Grid>
+
+                <Grid
+            Grid.Row="1">
+
+                    <DataGrid x:Name="gridEmployeeDetails" 
+                      VerticalAlignment="Top" 
+                      VerticalGridLinesBrush="White" 
+                      Background="White" 
+                      RowHeight="50"
+                      AutoGenerateColumns="False"
+                      FontSize="20" 
+                      ColumnWidth="180" 
+                      IsReadOnly="True">
+
+                        <DataGrid.Resources>
+                            <Style x:Key="test" 
+                   TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                                <Setter Property="Margin" 
+                                Value="12 0 12 0"/>
+                                <Setter Property="VerticalContentAlignment"
+                 Value="Center" />
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="HorizontalAlignment" 
+                        Value="Stretch"/>
+                                <Setter Property="FontSize" Value="16" />
+                                <Setter Property="FontWeight" Value="Medium" />
+                                <Setter Property="Foreground" Value="#022B3A"/>
+
+                            </Style>
+
+                            <Style x:Key="elemntStyle" TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" 
+                                Value="Center" />
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="HorizontalAlignment" 
+                                Value="Center" />
+                                <Setter Property="Foreground" Value="#022B3A"/>
+                            </Style>
+
+                        </DataGrid.Resources>
+
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn 
+                        Header="Employee ID"
+                        MinWidth="80"
+                        HeaderStyle="{StaticResource test}"
+                        Binding="{Binding EmployeeId, Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                        ElementStyle="{StaticResource elemntStyle}">
+
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn 
+                        Header="Name"
+                        MinWidth="80"
+                        Width="1*"
+                        HeaderStyle="{StaticResource test}"
+                        Binding="{Binding FirstName, Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                        ElementStyle="{StaticResource elemntStyle}">
+
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn 
+                        Header="Contact"
+                        MinWidth="80"
+                        Width="1*"
+                        HeaderStyle="{StaticResource test}"
+                        Binding="{Binding ContactNo, Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                        ElementStyle="{StaticResource elemntStyle}">
+
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn 
+                        Header="Job Title"
+                        MinWidth="80"
+                        Width="1*"
+                        HeaderStyle="{StaticResource test}"
+                        Binding="{Binding JobTitle, Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                        ElementStyle="{StaticResource elemntStyle}">
+
+                            </DataGridTextColumn>
+
+                            <DataGridTemplateColumn 
+                        x:Name="datagrid3dottemplate" 
+                        IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Menu
+                                    Margin="0"
+                                    Padding="0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                            ClipToBounds="False"
+                                            Style="{StaticResource MaterialDesignMenu}"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center">
+                                            <MenuItem
+                                                Margin="0"
+                                                Header="More"
+                                                Padding="6 0 6 0"
+                                                Style="{DynamicResource MaterialDesignMenuItem}"
+                                              VerticalAlignment="Center" 
+                                              HorizontalAlignment="Center">
+                                                <MenuItem.Icon>
+                                                    <materialDesign:PackIcon 
+                                                        Padding="0"
+                                                        Margin="0"
+                                                        Kind="ChevronDown"/>
+                                                </MenuItem.Icon>
+                                                <MenuItem 
+                                            HorizontalAlignment="Center"
+                                            x:Name="menuItemMore" 
+                                            Header="More" 
+                                                    Style="{StaticResource MaterialDesignMenuItem}"
+                                            Click="menuItemMore_Click"/>
+                                                <MenuItem x:Name="menuItemUpdate" 
+                                                  HorizontalAlignment="Center"
+                                                          Style="{StaticResource MaterialDesignMenuItem}"
+                                                  Header="Update" Click="menuItemUpdate_Click"/>
+                                                <MenuItem x:Name="menuItemRemove" 
+                                                  HorizontalAlignment="Center"
+                                                          Style="{StaticResource MaterialDesignMenuItem}"
+                                                  Header="Remove" Click="menuItemRemove_Click"/>
+                                            </MenuItem>
+                                        </Menu>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+                
+                <!--<TextBlock IsEnabled="False" Text="No Preview" Height="298.4" Margin="0,125,0,25.6" TextAlignment="Center" FontSize="30"  />-->
+
+            </Grid>
+
+        </ScrollViewer>
+        
+    </Grid>
+    
+</Page>

@@ -1,0 +1,599 @@
+create database AttendanceManagement
+
+use AttendanceManagement
+
+--drop table ProjectDetails
+--drop table ProjectAttendance
+--drop table LeaveDetails
+--drop table LoginCredentials
+--drop table EmployeeDetails
+--drop table LeaveTransaction
+--drop table RoleDetails
+
+create table RoleDetails
+(
+RoleId int primary key identity,
+RoleName varchar(20)
+)
+
+insert into RoleDetails values 
+('Admin'),('Manager'),('Employee')
+
+
+create table EmployeeDetails
+(EmployeeId int primary key identity (1000,1),
+FirstName varchar(25) not null,
+LastName varchar(25) not null,
+DateOfBirth date not null,
+ContactNo varchar(25) unique,
+Email varchar(30) unique,
+JobTitle varchar(30) not null,
+ManagerId int,
+RoleId int foreign key references RoleDetails(RoleId)
+)
+
+create table ProjectDetails
+(ProjectId int primary key identity(100,1),
+ProjectName varchar(25) not null,
+StartDate date not null,
+EndDate date not null
+)
+
+create table ProjectAttendance
+(EmployeeId int foreign key references EmployeeDetails(EmployeeId),
+ProjectId int foreign key references ProjectDetails(ProjectId),
+DateOfAttendance datetime default GetDate(),
+Primary key(EmployeeId,ProjectId,DateOfAttendance),
+AttendanceStatus int default 0
+)
+
+create table LeaveDetails
+(EmployeeId int foreign key references EmployeeDetails(EmployeeId),
+NumberOfLeaves int not null default 3,
+LastRefreshedDate date default GetDate()
+)
+
+create table LoginCredentials
+(EmployeeId int foreign key references EmployeeDetails(EmployeeId),
+LoginPassword binary(64) not null
+)
+
+create table LeaveTransaction
+(TransactionId int identity(1,1) primary key,
+EmployeeId int foreign key references EmployeeDetails(EmployeeId),
+DateOfRequest date not null,
+StartDate date not null,
+EndDate date not null,
+NoOfDays int not null,
+TransactionStatus varchar(10) default 'Pending',
+Reason varchar(200)
+)
+
+create table RemovedEmployees 
+(EmployeeId int foreign key references EmployeeDetails(EmployeeId),
+ProjectId int foreign key references ProjectDetails(ProjectId))
+
+create table FinishedProjects
+(ProjectId int foreign key references ProjectDetails(ProjectId))
+
+
+insert into EmployeeDetails values('Mahesh','Iyer','1989/11/03','9864789294','mahesh_iyer@gamil.com','Analyst',null,1)
+
+
+
+
+--Procs
+
+--login
+create or alter proc sp_login(@empid int,@password varchar(25),@success int output,@roleid int output,@empName varchar(50) output)
+as begin
+declare @loggedpass binary(64),@actualpass binary(64)
+set @actualpass=(select LoginPassword from LoginCredentials where EmployeeId=@empid)
+set @loggedpass = HASHBYTES('SHA2_512',@password)
+if (@loggedpass=@actualpass)
+begin
+set @success=1
+set @empName = (select CONCAT(FirstName ,' ', LastName) from EmployeeDetails where EmployeeId = @empid)
+set @roleid=(select RoleId from EmployeeDetails where EmployeeId=@empid)
+end
+else
+begin
+set @success = 0
+set @empName = ''
+set @roleid = -1
+end
+end
+
+
+create or alter proc sp_GetRole
+as begin
+select RoleId,RoleName from RoleDetails where RoleName!='Admin'
+end
+
+
+--admin add project
+create or alter proc sp_AddProject(@projectname varchar(25),@startdate date,@enddate date,@success int output)
+as begin
+set @success=0
+insert into ProjectDetails values(@projectname,@startdate,@enddate)
+if (@@ROWCOUNT>0)
+begin 
+set @success=1 
+end
+end
+
+--admin update project
+create or alter proc sp_UpdateProject(@id int,@projectname varchar(25),@startdate date,@enddate date,@success int output)
+as begin
+set @success=0
+update ProjectDetails set ProjectName=@projectname,StartDate=@startdate,EndDate=@enddate where ProjectId=@id
+if (@@ROWCOUNT>0)
+begin 
+set @success=1 
+end
+end
+
+--admin delete project
+create or alter proc sp_DeleteProject(@id int,@success int output)
+as begin
+set @success=0
+delete from ProjectDetails where ProjectId=@id
+if (@@ROWCOUNT>0)
+begin 
+set @success=1 
+end
+end
+
+--admin assign employee to project
+create or alter proc sp_AssignProject(@employeeid int,@projectid int,@success int output)
+as begin 
+set @success=0
+insert into ProjectAttendance values(@employeeid,@projectid,CONVERT(date, GETDATE()),default)
+if (@@ROWCOUNT>0)
+begin
+set @success=1
+end
+end
+
+--addemployee
+create or alter proc sp_AddEmployee(@firstname varchar(25),@lastname varchar(25)
+,@dob date,@contact varchar(25),@email varchar(30),@job varchar(15),
+@managerid int,@role int,@success int output,@id int output)
+as begin
+set @success=0
+insert into EmployeeDetails values(@firstname,@lastname,@dob,@contact,@email,@job,@managerid,@role)
+if (@@ROWCOUNT >0)
+begin  set @success=1 end
+SET @id=SCOPE_IDENTITY()
+end
+
+
+--updateemployee
+create or alter proc sp_UpdateEmployee(@id int,@firstname varchar(25),@lastname varchar(25)
+,@dob date,@contact varchar(25),@email varchar(30),@job varchar(15),
+@managerid int,@role int,@success int output)
+as begin
+set @success=0
+update EmployeeDetails set FirstName=@firstname,LastName=@lastname,DateOfBirth=@dob,ContactNo=@contact,
+Email=@email,JobTitle=@job,
+ManagerId=@managerid,RoleId=@role where EmployeeId=@id
+if (@@ROWCOUNT >0)
+begin 
+set @success=1 
+end
+end
+
+--delete employee
+create or alter proc sp_DeleteEmployee(@id int,@success int output)
+as begin 
+set @success=0
+delete from EmployeeDetails where EmployeeId=@id
+if (@@ROWCOUNT>0)
+begin set @success=1 end
+end
+
+create or alter proc sp_GetManagerName 
+as begin 
+select EmployeeId,FirstName,LastName from EmployeeDetails where RoleId=2
+end
+
+
+
+--admin view pending leave
+create or alter proc sp_AdminViewPendingLeaveRequest
+as begin
+select lt.TransactionId, lt.EmployeeId,Concat(ed.FirstName,' ',ed.LastName) as 'Employee Name',Convert(date,lt.DateOfRequest) as 'Date of Request',
+Convert(date,lt.StartDate) as 'Start Date',Convert(date,lt.EndDate) as 'End Date',lt.NoOfDays,lt.Reason
+from LeaveTransaction lt,EmployeeDetails ed
+where lt.EmployeeId=ed.EmployeeId and lt.TransactionStatus='Pending' and ed.RoleId=2
+end
+
+--admin view pending attendance
+create or alter proc sp_AdminViewPendingAttendanceRequest
+as begin
+select pa.EmployeeId,Concat(ed.FirstName,' ',ed.LastName) as 'EmployeeName',pa.ProjectId,pd.ProjectName from ProjectAttendance pa,EmployeeDetails ed,ProjectDetails pd
+where AttendanceStatus=0 and Convert(date,DateOfAttendance) = (select Convert(date, getdate()))
+and pa.EmployeeId=ed.EmployeeId and pa.ProjectId=pd.ProjectId and ed.RoleId=2
+end
+
+
+--employee add leave
+create or alter proc sp_RequestLeave(@empid int,@startDate date,@endDate date,@noofdays int,@reason varchar(70),@success int output)
+as begin
+declare @existingstart date,@existingend date
+select @existingstart=StartDate,@existingend=EndDate from LeaveTransaction where EmployeeId=@empid 
+and (TransactionStatus = 'Accepted' or TransactionStatus = 'Pending')
+if(@startDate between @existingstart and @existingend or @endDate between @existingstart and @existingend)
+begin
+set @success=0
+end
+else
+begin
+insert into LeaveTransaction values(@empid,GETDATE(),@startDate,@endDate,@noofdays,default,@reason)
+if(@@ROWCOUNT>0)
+begin
+set @success=1
+end
+end
+end
+
+--login credentials into table 
+create or alter proc sp_AddEmpidandPassword(@empid int,@password varchar(25))
+as begin
+insert into LoginCredentials values(@empid,HASHBYTES('SHA2_512',@password))
+end
+
+--getEmployee
+create or alter proc sp_GetEmployeeName
+as begin
+select EmployeeId,CONCAT(FirstName,' ',LastName) as 'Employee Name' from EmployeeDetails
+end
+
+--getproject
+create or alter proc sp_GetProjectName
+as begin
+declare @num int
+set @num = (select count(ProjectId) from FinishedProjects)
+if (@num=0)
+begin
+select pd.ProjectId,pd.ProjectName from ProjectDetails pd
+end
+else begin
+select pd.ProjectId,pd.ProjectName from ProjectDetails pd,FinishedProjects fp
+where pd.ProjectId not in (select ProjectId from FinishedProjects)
+end
+end
+
+--manager views pending leave request
+create or alter proc sp_ManagerViewPendingLeaveRequest(@managerid int)
+as begin
+select lt.TransactionId, lt.EmployeeId, Concat(ed.FirstName,' ',ed.LastName) as 'Employee Name',Convert(date,lt.DateOfRequest) as 'Date of Request', 
+Convert(date,lt.StartDate) as 'Start Date',Convert(date,lt.EndDate) as 'End Date',lt.NoOfDays,lt.Reason
+from LeaveTransaction lt,EmployeeDetails ed 
+where lt.EmployeeId=ed.EmployeeId and lt.TransactionStatus='Pending'
+and ed.ManagerId=@managerid
+end
+
+--manager view pending attendance
+create or alter proc sp_ManagerViewPendingAttendanceRequest(@managerid int)
+as begin 
+select pa.EmployeeId,Concat(ed.FirstName,' ',ed.LastName) as 'EmployeeName',pa.ProjectId,pd.ProjectName from ProjectAttendance pa,EmployeeDetails ed,ProjectDetails pd
+where ed.ManagerId=@managerid and 
+AttendanceStatus=0 and Convert(date,DateOfAttendance) = (select Convert(date, getdate())) 
+and pa.EmployeeId=ed.EmployeeId and pa.ProjectId=pd.ProjectId 
+end
+
+--employee view pending leave request 
+create or alter proc sp_EmployeeViewLeave(@employeeid int)
+as begin
+declare @today date = Convert(date,getDate())
+select TransactionId,DateOfRequest,StartDate,EndDate,TransactionStatus,Reason 
+from LeaveTransaction where EmployeeId=@employeeid and StartDate > @today
+end
+
+--employee view attendance status
+create or alter proc sp_EmployeeViewAttendance(@employeeid int)
+as begin
+select Convert(date,pa.DateOfAttendance) as 'DateOfRequest',pd.ProjectName,
+case
+when pa.AttendanceStatus=0 then 'Pending'
+when pa.AttendanceStatus=1 then 'Accepted'
+end as 'AttendanceStatus'
+from ProjectAttendance pa,ProjectDetails pd
+where pa.ProjectId=pd.ProjectId and pa.EmployeeId=@employeeid
+and Convert(date,DateOfAttendance) = (select Convert(date, getdate()))
+end
+
+
+--update leave status
+create or alter proc sp_UpdateLeaveStatus(@transid int,@status varchar(10))
+as begin
+update LeaveTransaction set TransactionStatus=@status where TransactionId=@transid
+end
+
+--Day 5 
+
+create or alter proc sp_AdminViewAllAttendance(@startdate date,@enddate date)
+as begin
+select pa.EmployeeId,Concat(ed.FirstName,' ',ed.LastName) as 'EmployeeName',
+pa.ProjectId,pd.ProjectName,pa.DateOfAttendance
+from ProjectAttendance pa,EmployeeDetails ed,ProjectDetails pd
+where Convert(date,DateOfAttendance) between @startdate and @enddate 
+and AttendanceStatus=1  
+and pa.EmployeeId=ed.EmployeeId and pa.ProjectId=pd.ProjectId 
+end
+
+create or alter proc sp_AdminViewAllLeave
+as begin
+select lt.EmployeeId,Concat(ed.FirstName,' ',ed.LastName) as 'Employee Name',
+Convert(date,lt.StartDate) as 'Start Date',Convert(date,lt.EndDate) as 'End Date',
+lt.NoOfDays,lt.Reason
+from LeaveTransaction lt,EmployeeDetails ed
+where lt.EmployeeId=ed.EmployeeId and lt.TransactionStatus='Accepted'
+end
+
+create or alter proc sp_GetDateForProject(@projectid int)
+as begin
+select StartDate,EndDate,ProjectName from ProjectDetails where ProjectId=@projectid
+end
+
+create or alter proc sp_AssignEmployees(@projectid int)
+as begin
+select ed.EmployeeId,Concat(ed.FirstName,' ',ed.LastName) as 'EmployeeName',ed.ContactNo,ed.JobTitle
+from EmployeeDetails ed 
+where ed.RoleId!=1 and (ed.EmployeeId not in 
+(select distinct(pa.EmployeeId) from ProjectAttendance pa where pa.ProjectId=@projectid) 
+or ed.EmployeeId in (select distinct (EmployeeId) from RemovedEmployees where ProjectId = @projectid))
+order by EmployeeId
+end
+
+create or alter proc sp_GetRemainingLeave(@employeeid int)
+as begin
+select NumberOfLeaves from LeaveDetails where EmployeeId=@employeeid
+end
+
+--employee update leave request
+create or alter proc sp_UpdateRequestLeave(@transactionid int,@empid int,@startDate date,@endDate date,
+@noofdays int,@reason varchar(70),@success int output)
+as begin
+set @success=0
+update LeaveTransaction set EmployeeId=@empid,DateOfRequest= GETDATE(),
+StartDate= @startDate,EndDate= @endDate,NoOfDays=@noofdays,
+TransactionStatus=default,Reason=@reason where TransactionId=@transactionid
+if(@@ROWCOUNT>0)
+begin
+set @success=1
+end
+end
+
+--employee delete Leave request
+create or alter proc sp_DeleteLeaveRequest(@transactionid int,@success int output)
+as begin
+set @success=0
+delete from LeaveTransaction  where TransactionId=@transactionid
+if(@@ROWCOUNT>0)
+begin
+set @success=1
+end
+end
+
+--employee/manager add attendance
+create or alter proc sp_AddAttendance(@empid int,@projectid int)
+as begin
+insert into ProjectAttendance values(@empid,@projectid,convert(date,GETDATE()),default)
+end
+
+--manager/admin approve attendance
+create or alter proc sp_UpdateAttendance(@empid int,@projectid int,@status int)
+as begin
+update ProjectAttendance set AttendanceStatus=@status where EmployeeId=@empid and ProjectId=@projectid 
+and convert(date,DateOfAttendance)=convert(date,getdate())
+end
+
+--employee/manager delete their attendance
+create or alter proc sp_DeleteAttendance(@empid int,@projectid int,@success int out)
+as begin
+declare @count int
+set @count= (select count(EmployeeId) from ProjectAttendance where EmployeeId=@empid and ProjectId=@projectid)
+if (@count =1)
+begin
+set @success=0
+end
+else
+begin
+delete from ProjectAttendance where EmployeeId=@empid and ProjectId=@projectid and convert(date,DateOfAttendance)=convert(date,GETDATE())
+set @success=1
+end
+end
+
+
+--Day 6
+
+create or alter proc sp_GetLastRefreshedDate(@employeeid int,@lastdate date out)
+as begin
+set @lastdate= (select LastRefreshedDate from LeaveDetails where EmployeeId=@employeeid)
+end
+
+--Day 7
+
+create or alter proc sp_GetEmployeeDetailsForProject(@projectid int)
+as begin
+declare @num int
+set @num=(select count(EmployeeId) from RemovedEmployees)
+if (@num=0)
+begin 
+select distinct(ed.EmployeeId),CONCAT(ed.FirstName,' ',ed.LastName) as 'EmployeeName',ed.ContactNo,ed.Email
+from ProjectAttendance pa,EmployeeDetails ed,ProjectDetails pd
+where pa.ProjectId=@projectid and pa.EmployeeId=ed.EmployeeId
+end
+else begin
+select distinct(ed.EmployeeId),CONCAT(ed.FirstName,' ',ed.LastName) as 'EmployeeName',ed.ContactNo,ed.Email
+from ProjectAttendance pa,EmployeeDetails ed,ProjectDetails pd
+where pa.ProjectId=@projectid and pa.EmployeeId=ed.EmployeeId 
+and ed.EmployeeId not in (select EmployeeId from RemovedEmployees where ProjectId = @projectid)
+end
+end
+
+
+--get projects of an employee
+create or alter proc sp_GetProjectOfEmployee(@empid int)
+as begin
+select distinct (pa.ProjectId),pd.ProjectName from ProjectAttendance pa,ProjectDetails pd
+where pa.ProjectId=pd.ProjectId 
+and pa.EmployeeId=@empid and pd.ProjectId not in (select ProjectId from FinishedProjects)
+and pd.ProjectId not in (select ProjectId from RemovedEmployees where EmployeeId=@empid)
+end
+
+create or alter proc sp_RemoveEmployeeFromAssignedProject(@employeeid int,@projectid int)
+as begin 
+insert into RemovedEmployees values(@employeeid,@projectid)
+end
+
+
+--********************************************************************
+Create or Alter procedure sp_SearchEmployeeDetails(@search as varchar(30))
+as
+begin
+select * from EmployeeDetails 
+where EmployeeId like '%'+@search+'%' or
+FirstName like '%'+@search+'%' or 
+LastName like '%'+@search+'%' or
+ContactNo like '%'+@search+'%' or
+JobTitle like '%'+@search+'%'
+end
+
+
+Create or Alter procedure sp_GetEmployeeInfoByID(@EmployeeID varchar(10))
+as
+begin
+select * from EmployeeDetails 
+where EmployeeId = @EmployeeID
+end
+
+
+
+Create or Alter procedure sp_GetEmployeeDetails
+as
+begin
+select * from EmployeeDetails where RoleId != 1
+end
+
+
+create or alter proc sp_GetEmployeeAttendance(@employeeid int)
+as begin
+select * from ProjectAttendance where EmployeeId=@employeeid and AttendanceStatus=0;
+end
+
+
+create or alter proc sp_DeleteEmployeeAttendance(@employeeid int,@projectid int,@date date,@success int output)
+as begin
+set @success=0
+Delete from ProjectAttendance where EmployeeId=@employeeid and ProjectId=@projectid and DateOfAttendance=@date
+if (@@ROWCOUNT >0)
+begin  
+set @success=1 
+end
+end
+
+
+create or alter proc sp_addleaveeverymonth(@empid int)
+as begin
+update LeaveDetails set NumberOfLeaves=(NumberOfLeaves+3), LastRefreshedDate = GETDATE()
+where EmployeeId=@empid
+end
+
+
+--************************************************************************
+
+
+--triggers
+
+create or alter trigger trg_deleteemployee 
+on EmployeeDetails instead of delete
+as begin
+declare @empid int
+set @empid=(select EmployeeId from deleted)
+delete from ProjectAttendance where EmployeeId=@empid
+delete from LoginCredentials where EmployeeId=@empid
+delete from LeaveDetails where EmployeeId=@empid
+delete from LeaveDetails where EmployeeId=@empid
+delete from EmployeeDetails where EmployeeId=@empid
+end
+
+
+create or alter trigger trg_newemployeeleaves
+on EmployeeDetails for insert
+as begin
+declare @empid int
+set @empid=(select EmployeeId from inserted)
+insert into LeaveDetails values(@empid,default,default)
+end
+
+create or alter trigger trg_subtractemployeeleaves
+on LeaveTransaction for update
+as begin
+declare @empid int,@noofdays int
+select @empid=EmployeeId,@noofdays=NoOfDays from inserted where TransactionStatus='Accepted'
+update LeaveDetails set NumberOfLeaves=(NumberOfLeaves-@noofdays) where EmployeeId=@empid
+end
+
+
+drop trigger trg_deleteweekends
+
+create or alter trigger trg_finishedprojects
+on ProjectAttendance for insert
+as begin
+declare @projectid int,@enddate date
+select @projectid=ProjectId from inserted
+select @enddate=EndDate from ProjectDetails where ProjectId=@projectid
+if(@enddate=convert(date,GETDATE()))
+begin
+insert into FinishedProjects values(@projectid)
+end
+end
+
+create or alter trigger trg_updateleave
+on LeaveTransaction for update
+as begin
+declare @empid int,@noofdays int
+select @empid=EmployeeId,@noofdays=NoOfDays from deleted where TransactionStatus='Accepted'
+update LeaveDetails set NumberOfLeaves=(NumberOfLeaves+@noofdays) where EmployeeId=@empid
+end
+
+create or alter trigger trg_employeedeletedthesameday
+on RemovedEmployees for insert
+as begin
+declare @empid int,@projectid int
+select @empid=EmployeeId,@projectid=ProjectId from inserted
+if(select count(EmployeeId) from ProjectAttendance where ProjectId=@projectid and EmployeeId=@empid)=1
+delete from ProjectAttendance where EmployeeId=@empid and ProjectId=@projectid
+end
+
+create or alter trigger trg_deleteproject
+on ProjectDetails instead of delete
+as begin
+declare @projectid int
+set @projectid=(select ProjectId from deleted)
+delete from ProjectAttendance where ProjectId=@projectid
+delete from ProjectDetails where ProjectId=@projectid
+end
+
+create or alter trigger trg_ReassignEmployee
+on ProjectAttendance after insert
+as begin
+declare @empid int ,@projid int
+select @empid=EmployeeId,@projid=ProjectId from inserted
+if ((select count(EmployeeId) from RemovedEmployees where EmployeeId=@empid and ProjectId=@projid)=1)
+begin 
+delete from RemovedEmployees where EmployeeId=@empid and ProjectId=@projid
+end
+end
+
+
+create or alter trigger trg_deleteleave
+on LeaveTransaction for delete
+as begin
+declare @empid int,@noofdays int
+select @empid=EmployeeId,@noofdays=NoOfDays from deleted where TransactionStatus='Accepted'
+update LeaveDetails set NumberOfLeaves=(NumberOfLeaves+@noofdays) where EmployeeId=@empid
+end

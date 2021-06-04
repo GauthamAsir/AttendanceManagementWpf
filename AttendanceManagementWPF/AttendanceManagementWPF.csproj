@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D7CDD3A5-3956-4504-9868-C5AD5F29565A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AttendanceManagementWPF</RootNamespace>
+    <AssemblyName>AttendanceManagementWPF</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AttendanceManagementBAL">
+      <HintPath>..\..\..\..\Downloads\Compressed\ClassLibraries\ClassLibraries\AttendanceManagementBAL\AttendanceManagementBAL\bin\Debug\AttendanceManagementBAL.dll</HintPath>
+    </Reference>
+    <Reference Include="Entities">
+      <HintPath>..\..\..\..\Downloads\Compressed\ClassLibraries\ClassLibraries\AttendanceManagementBAL\AttendanceManagementBAL\bin\Debug\Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="Exceptions">
+      <HintPath>..\..\..\..\Downloads\Compressed\ClassLibraries\ClassLibraries\AttendanceManagementBAL\AttendanceManagementBAL\bin\Debug\Exceptions.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=2.0.0.2422, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.2.0.0\lib\net452\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=4.0.0.2422, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.4.0.0\lib\net452\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="DialogBox.xaml.cs">
+      <DependentUpon>DialogBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Admin\AddEmployeeAdmin.xaml.cs">
+      <DependentUpon>AddEmployeeAdmin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Admin\AssignEmployeeToProjectAdmin.xaml.cs">
+      <DependentUpon>AssignEmployeeToProjectAdmin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Admin\AttendanceApprovalAdmin.xaml.cs">
+      <DependentUpon>AttendanceApprovalAdmin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Admin\LeaveApprovalAdmin.xaml.cs">
+      <DependentUpon>LeaveApprovalAdmin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Admin\ProjectDetailsAdmin.xaml.cs">
+      <DependentUpon>ProjectDetailsAdmin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Admin\UpdateEmployeeAdmin.xaml.cs">
+      <DependentUpon>UpdateEmployeeAdmin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\User\AddAttendanceUser.xaml.cs">
+      <DependentUpon>AddAttendanceUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\User\AttendanceEmployee.xaml.cs">
+      <DependentUpon>AttendanceEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\User\LeavesScreenEmployee.xaml.cs">
+      <DependentUpon>LeavesScreenEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\User\LeavesScreenManager.xaml.cs">
+      <DependentUpon>LeavesScreenManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\User\AddLeavesUser.xaml.cs">
+      <DependentUpon>AddLeavesUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\User\AttendanceManager.xaml.cs">
+      <DependentUpon>AttendanceManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\User\DashboardUserWindow.xaml.cs">
+      <DependentUpon>DashboardUserWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Admin\AddUpdateProjectPage.xaml.cs">
+      <DependentUpon>AddUpdateProjectPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Admin\EmployeeDetailsPage.xaml.cs">
+      <DependentUpon>EmployeeDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Authentication\RegisterEmployeeWindow.xaml.cs">
+      <DependentUpon>RegisterEmployeeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Utils.cs" />
+    <Compile Include="WelcomeWindow.xaml.cs">
+      <DependentUpon>WelcomeWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="DialogBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Admin\AddEmployeeAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Admin\AssignEmployeeToProjectAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Admin\AttendanceApprovalAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Admin\LeaveApprovalAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Admin\ProjectDetailsAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Admin\UpdateEmployeeAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\User\AddAttendanceUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\User\AttendanceEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\User\LeavesScreenEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\User\LeavesScreenManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\User\AddLeavesUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\User\AttendanceManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\User\DashboardUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Admin\AddUpdateProjectPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Admin\AttendancePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Admin\EmployeeDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Admin\DashboardAdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Admin\EmployeesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Admin\LeavesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Authentication\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="screens\Admin\AttendancePage.xaml.cs">
+      <DependentUpon>AttendancePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Admin\DashboardAdminWindow.xaml.cs">
+      <DependentUpon>DashboardAdminWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Admin\EmployeesPage.xaml.cs">
+      <DependentUpon>EmployeesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Admin\LeavesPage.xaml.cs">
+      <DependentUpon>LeavesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="screens\Authentication\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="screens\Admin\ProjectsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="screens\Authentication\RegisterEmployeeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WelcomeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="screens\Admin\ProjectsPage.xaml.cs">
+      <DependentUpon>ProjectsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\attendance.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets'))" />
+  </Target>
+</Project>

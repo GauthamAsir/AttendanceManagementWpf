@@ -1,0 +1,205 @@
+﻿<Window x:Class="AttendanceManagementWPF.screens.Admin.AssignEmployeeToProjectAdmin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AttendanceManagementWPF.screens.Admin"
+        mc:Ignorable="d"
+        Background="White"
+        WindowState="Maximized"
+        SizeToContent="WidthAndHeight"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        WindowStartupLocation="CenterScreen"
+        Title="Assign Employee To Project">
+    <Grid>
+
+        <Grid
+            Grid.Row="0">
+
+            <ScrollViewer>
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Background="#022B3A">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Employees"
+               Foreground="White"
+                   VerticalContentAlignment="Center"
+               FontSize="18"/>
+
+                        <Grid
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Margin="12 0 12 0"
+                        HorizontalAlignment="Center"
+                        Width="180">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="24"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <materialDesign:PackIcon
+                                Grid.Column="0"
+                                VerticalAlignment="Bottom"
+                                Kind="Search"
+                            Foreground="White"
+                                Width="18"
+                                Margin="0 0 0 0"
+                                Height="18"/>
+
+                            <TextBox                                     
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                    x:Name="txtSearchEmployee"
+                                Grid.Column="1"
+                            FontWeight="Medium"
+                            Padding="6 0 6 0"
+                            Foreground="White"
+                            materialDesign:TextFieldAssist.UnderlineBrush="White"
+                            TextChanged="txtSearchEmployee_TextChanged"
+                            materialDesign:HintAssist.Hint="Search"
+                            materialDesign:HintAssist.Foreground="White"
+                            FontSize="12">
+
+                            </TextBox>
+                        </Grid>
+
+                    </Grid>
+
+                    <Grid
+                        Grid.Row="1">
+
+                        <DataGrid x:Name="gridEmployeeDetails" 
+                      VerticalAlignment="Top" 
+                      VerticalGridLinesBrush="White" 
+                                  
+                      Background="White" 
+                      RowHeight="50"
+                      AutoGenerateColumns="False"
+                      FontSize="20" 
+                      ColumnWidth="180" 
+                      IsReadOnly="True">
+
+                            <DataGrid.Resources>
+                                <Style x:Key="test" 
+                                    TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="HorizontalContentAlignment"
+                                        Value="Center" />
+                                    <Setter Property="Margin" 
+                                Value="12 0 12 0"/>
+                                    <Setter Property="VerticalContentAlignment"
+                                                Value="Center" />
+                                    <Setter Property="BorderThickness" Value="0" />
+                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                    <Setter Property="HorizontalAlignment" 
+                                            Value="Stretch"/>
+                                    <Setter Property="FontSize" Value="16" />
+                                    <Setter Property="FontWeight" Value="Medium" />
+                                    <Setter Property="Foreground" Value="#022B3A"/>
+
+                                </Style>
+
+                                <Style x:Key="elemntStyle" TargetType="TextBlock">
+                                    <Setter Property="VerticalAlignment" 
+                                Value="Center" />
+                                    <Setter Property="HorizontalAlignment" 
+                                Value="Center" />
+                                    <Setter Property="FontSize" 
+                                            Value="12"/>
+                                    <Setter Property="Foreground" Value="#022B3A"/>
+                                </Style>
+
+                            </DataGrid.Resources>
+
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn 
+                        Header="Employee ID"
+                        Width="1*"
+                                    MinWidth="150"
+                        HeaderStyle="{StaticResource test}"
+                        Binding="{Binding EmployeeId, Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                        ElementStyle="{StaticResource elemntStyle}"/>
+
+                                <DataGridTextColumn 
+                                    Header="Name"
+                                    MinWidth="150"
+                                    Width="1*"
+                                    HeaderStyle="{StaticResource test}"
+                                    Binding="{Binding EmployeeName, Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged}"
+                                    ElementStyle="{StaticResource elemntStyle}"/>
+
+                                <DataGridTextColumn 
+                        Header="Contact"
+                        MinWidth="150"
+                        Width="1*"
+                        HeaderStyle="{StaticResource test}"
+                        Binding="{Binding ContactNo, Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                        ElementStyle="{StaticResource elemntStyle}">
+
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn 
+                        Header="Job Title"
+                        MinWidth="150"
+                        Width="1*"
+                        HeaderStyle="{StaticResource test}"
+                        Binding="{Binding JobTitle, Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                        ElementStyle="{StaticResource elemntStyle}">
+
+                                </DataGridTextColumn>
+
+                                <DataGridTemplateColumn 
+                                    x:Name="AddButtonColumn" 
+                                    Header="Action"
+                                    MinWidth="150"
+                                    Width="1*"
+                                    IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button 
+                                                x:Name="AssignEmployee"
+                                                BorderThickness="0"
+                                                Content="Assign"
+                                                Background="#022B3A"
+                                                FontSize="12"
+                                                Foreground="White"
+                                                FontWeight="Medium"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Click="AssignEmployee_Click"
+                                                Style="{StaticResource 
+                                                MaterialDesignRaisedAccentButton}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
+
+                </Grid>
+
+            </ScrollViewer>
+
+        </Grid>
+
+        
+
+    </Grid>
+</Window>

@@ -1,0 +1,555 @@
+﻿<Page x:Class="AttendanceManagementWPF.ProjectDetailsAdmin"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AttendanceManagementWPF"
+      mc:Ignorable="d" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+      d:DesignHeight="450" 
+      d:DesignWidth="800"
+      Background="White"
+      Title="ProjectDetailsAdmin">
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto">
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button
+                Grid.Column="0"
+                x:Name="BackButton"
+                Margin="12 0 0 0"
+                Click="BackButton_Click"
+                Background="White"
+                Padding="4"
+                BorderThickness="0"
+                BorderBrush="Transparent"
+                materialDesign:ButtonAssist.CornerRadius="4"
+                Style="{StaticResource MaterialDesignFlatAccentBgButton}">
+
+                    <Button.BitmapEffect>
+                        <DropShadowBitmapEffect 
+                        Color="#022B3A" 
+                        Direction="320" 
+                        Softness="1" 
+                        ShadowDepth="4" 
+                        Opacity="0.5" />
+                    </Button.BitmapEffect>
+
+                    <materialDesign:PackIcon 
+                    Kind="ChevronLeft"
+                    Width="24"
+                    Height="24"
+                    Foreground="#022B3A"               />
+                </Button>
+
+                <Label
+                Grid.Column="1"
+            Content="Project Details" 
+               FontWeight="Bold" 
+               HorizontalAlignment="Left"
+            Margin="24 0 0 0"
+               FontSize="24"
+                   Foreground="#022B3A"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="Stretch"
+               HorizontalContentAlignment="Center"/>
+
+                <StackPanel 
+                        Grid.Column="1"
+                        Margin="0 0 12 0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+
+                    <Button 
+                            x:Name="edit"
+                        Click="edit_Click"
+                            Background="#022B3A"
+                            Padding="12 0 12 0"
+                            Margin="12 0 12 0"
+                            Foreground="White"
+                            materialDesign:ButtonAssist.CornerRadius="4"
+                            BorderThickness="0"
+                            Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                        <StackPanel 
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+
+                            <materialDesign:PackIcon
+                                    Kind="Edit"
+                                    VerticalContentAlignment="Center"
+                                    VerticalAlignment="Center"/>
+
+                            <Label Content="Edit"
+                                       FontSize="14"
+                                       Foreground="White"
+                                       VerticalContentAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button 
+                            x:Name="delete"
+                        Click="delete_Click"
+                            Background="Red"
+                            Padding="12 0 12 0"
+                            Margin="12 0 12 0"
+                            Foreground="White"
+                            materialDesign:ButtonAssist.CornerRadius="4"
+                            BorderThickness="0"
+                            Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                        <StackPanel 
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+
+                            <materialDesign:PackIcon
+                                    Kind="Delete"
+                                    VerticalContentAlignment="Center"
+                                    VerticalAlignment="Center"/>
+
+                            <Label Content="Delete"
+                                       FontSize="14"
+                                       Foreground="White"
+                                       VerticalContentAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Grid.Row="1"
+              Margin="24 24 24 0"
+              VerticalAlignment="Center">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border 
+                Grid.Row="0"
+                Background="#022B3A"
+                BorderBrush="#022B3A"
+                BorderThickness="1"
+                CornerRadius="4">
+
+                    <Grid Margin="0">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label 
+                                x:Name="txtProjectName"
+                        Grid.Column="0"
+                    Content="Project Name"
+                    FontSize="22"
+                        Margin="0"
+                        Padding="12 0 12 0"
+                    Foreground="White"
+                    FontWeight="Bold"
+                            HorizontalAlignment="Left"
+                    VerticalContentAlignment="Center"/>
+
+                            <Label 
+                                x:Name="txtProjectID"
+                        Grid.Column="1"
+                    Content="Project ID"
+                    FontSize="22"
+                        Margin="0"
+                        Padding="12 0 12 0"
+                    Foreground="White"
+                    FontWeight="Bold"
+                            HorizontalAlignment="Right"
+                    VerticalContentAlignment="Center"/>
+
+                        </Grid>
+
+                        <Border
+                        Grid.Row="1"
+                        BorderThickness="0"
+                        BorderBrush="Transparent"
+                        Background="White"
+                        CornerRadius="0 0 4 4">
+
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid
+                                Grid.Column="0"
+                                Margin="12 0 12 0">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel
+                                    Grid.Row="0"
+                                    Orientation="Horizontal">
+
+                                        <materialDesign:PackIcon
+                                        Kind="CalendarDay"
+                                        VerticalAlignment="Center"/>
+
+                                        <Label
+                                    Content="Start Date: "
+                                    FontSize="14"
+                                    FontWeight="Medium"
+                                    VerticalContentAlignment="Center"/>
+
+                                        <Label 
+                                        x:Name="txtStartDate"
+                                        Content=""
+                                    FontSize="14"
+                                    FontWeight="Medium"
+                                    VerticalContentAlignment="Center" />
+
+                                    </StackPanel>
+
+                                    <StackPanel
+                                    Grid.Row="1"
+                                    Orientation="Horizontal">
+
+                                        <materialDesign:PackIcon
+                                        Kind="CalendarDay"
+                                        VerticalAlignment="Center"/>
+
+                                        <Label
+                                    Content="End Date: "
+                                    FontSize="14"
+                                    FontWeight="Medium"
+                                    VerticalContentAlignment="Center"/>
+                                        <Label 
+                                        x:Name="txtEndDate"
+                                        Content=""
+                                    FontSize="14"
+                                    FontWeight="Medium"
+                                    VerticalContentAlignment="Center" />
+
+                                    </StackPanel>
+
+                                </Grid>
+
+                                <Grid
+                                Grid.Column="1"
+                                Margin="12 0 12 0"
+                                HorizontalAlignment="Right">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel
+                                    
+                                    Orientation="Horizontal">
+
+                                        <materialDesign:PackIcon
+                                        Kind="WorkOutline"
+                                        VerticalAlignment="Center"/>
+
+                                        <Label
+                                    Content="Total No. of Employees working: "
+                                    FontSize="14"
+                                    FontWeight="Medium"
+                                    VerticalContentAlignment="Center"/>
+                                        <Label 
+                                        x:Name="txtEmolyeesWorking"
+                                        Content=""
+                                    FontSize="14"
+                                    FontWeight="Medium"
+                                    VerticalContentAlignment="Center" />
+
+                                    </StackPanel>
+
+                                </Grid>
+
+                            </Grid>
+
+                        </Border>
+
+                    </Grid>
+
+                </Border>
+
+            </Grid>
+
+            <Grid
+            Grid.Row="2"
+            Margin="12 12 12 0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+
+                    </Grid.ColumnDefinitions>
+
+                    <Label 
+                            Grid.Column="0"
+                            Content="List of Employees" 
+                            FontSize="16"
+                                    Margin="16 0 16 0"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontWeight="Bold"/>
+
+                    <Button 
+                            x:Name="addEmployee"
+                            Grid.Column="1"
+                            Content="Assign Employee" 
+                            FontSize="14"
+                            Click="addEmployee_Click"
+                            Margin="16 0 16 0"
+                            BorderThickness="0"
+                            materialDesign:ButtonAssist.CornerRadius="4"
+                            Background="#022B3A"
+                            Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontWeight="Bold"/>
+
+                </Grid>
+
+                <DataGrid 
+                        Grid.Row="1"
+                        Margin="0 12 0 0"
+                        x:Name="gridEmployessProject" 
+                          AutoGenerateColumns="False"
+
+                          GridLinesVisibility="Horizontal"
+                          IsReadOnly="True"
+                          Padding="0"
+                          CanUserResizeRows="True"
+                          Style="{StaticResource MaterialDesignDataGrid}"
+                          CanUserAddRows="False">
+
+                    <DataGrid.Resources>
+                        <Style x:Key="test" 
+                   TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                            <Setter Property="Margin" 
+                                Value="12 0 12 0"/>
+                            <Setter Property="VerticalContentAlignment"
+                 Value="Center" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="HorizontalAlignment" 
+                        Value="Stretch"/>
+                            <Setter Property="FontSize" Value="16" />
+                            <Setter Property="FontWeight" Value="Medium" />
+                            <Setter Property="Foreground" Value="#022B3A"/>
+
+                        </Style>
+
+                        <Style x:Key="elemntStyle" TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" 
+                                Value="Center" />
+                            <Setter Property="HorizontalAlignment" 
+                                Value="Center" />
+                            <Setter Property="Foreground" Value="#022B3A"/>
+                        </Style>
+
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn 
+                                Header="Employee ID"
+                                MinWidth="150"
+                                ElementStyle="{StaticResource elemntStyle}"
+                                HeaderStyle="{StaticResource test}"
+                                Binding="{Binding EmployeeId}"/>
+
+                        <DataGridTextColumn 
+                                Header="Employee Name"
+                                MinWidth="150"
+                                ElementStyle="{StaticResource elemntStyle}"
+                                HeaderStyle="{StaticResource test}"
+                                Binding="{Binding EmployeeName}"/>
+
+                        <DataGridTextColumn 
+                                Header="Contact No."
+                                MinWidth="150"
+                                ElementStyle="{StaticResource elemntStyle}"
+                                HeaderStyle="{StaticResource test}"
+                                Binding="{Binding ContactNo}"/>
+
+                        <DataGridTextColumn 
+                            Header="Email"
+                            MinWidth="200"
+                            ElementStyle="{StaticResource elemntStyle}"
+                            HeaderStyle="{StaticResource test}"
+                            Binding="{Binding Email}"/>
+
+                        <DataGridTemplateColumn 
+                            Header="Action"                    
+                            MinWidth="120"
+                            HeaderStyle="{StaticResource test}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+
+                                    <Button 
+                                        Name="RemoveEmployee" 
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        Click="RemoveEmployee_Click" 
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="24"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <materialDesign:PackIcon 
+                                                Grid.Column="0"
+                                                Kind="DeleteOutline" 
+                                                Foreground="Red"
+                                                Width="22"
+                                                Height="22"
+                                                VerticalAlignment="Center"/>
+
+                                            <Label 
+                                                Grid.Column="1" 
+                                                Content="Remove" 
+                                                FontSize="12" />
+                                        </Grid>
+                                    </Button>
+
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
+
+
+
+
+
+
+
+                <!--<ListView
+                Grid.Row="11"
+                Margin="12"
+                  HorizontalContentAlignment="Stretch"
+                  Name="employeesList">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="Background" 
+                            Value="Transparent" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate 
+                                TargetType="{x:Type ListViewItem}">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.Template>
+                            <ControlTemplate>
+                                <ItemsPresenter></ItemsPresenter>
+                            </ControlTemplate>
+                        </ListView.Template>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                Background="White"
+                                Margin="0 12 0 12"
+                                CornerRadius="6">
+                                    <Border.Effect>
+                                        <DropShadowEffect 
+                                            Color="#022B3A"
+                                            ShadowDepth="2"
+                                            Opacity="0.4"
+                                            BlurRadius="6"/>
+                                    </Border.Effect>
+
+                                    <StackPanel
+                                            Grid.Column="0"
+                                        Margin="0 12 0 12"
+                                        HorizontalAlignment="Stretch">
+
+                                        <Label Content="{Binding Name}" 
+                                       FontSize="14"
+                                       Padding="12 6 12 6"/>
+
+                                        <Label Content="ID" 
+                                       FontSize="12"
+                                       FontWeight="Medium"
+                                       Padding="12 6 12 0"/>
+                                        <Label Content="{Binding ID}" 
+                                       FontSize="14"
+                                       Padding="12 0 12 6"/>
+
+                                        <Label Content="Contact No." 
+                                       FontSize="12"
+                                       FontWeight="Medium"
+                                       Padding="12 6 12 0"/>
+                                        <Label Content="{Binding Phone}" 
+                                       FontSize="14"
+                                       Padding="12 0 12 6"/>
+
+                                        <Label Content="Email" 
+                                       FontSize="12"
+                                       FontWeight="Medium"
+                                       Padding="12 6 12 0"/>
+                                        <Label Content="{Binding Email}" 
+                                       FontSize="14"
+                                       Padding="12 0 12 6"/>
+
+                                    </StackPanel>
+
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>-->
+
+            </Grid>
+
+        </Grid>
+    </ScrollViewer>
+
+</Page>

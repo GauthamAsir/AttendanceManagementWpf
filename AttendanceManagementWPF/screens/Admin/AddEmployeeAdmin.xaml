@@ -1,0 +1,258 @@
+﻿<Page x:Class="AttendanceManagementWPF.screens.Admin.AddEmployeeAdmin"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AttendanceManagementWPF.screens.Admin"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+      mc:Ignorable="d" 
+      Background="White"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddEmployeeAdmin">
+
+    <Grid>
+
+        <ScrollViewer>
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel
+            Grid.Row="0"
+            Orientation="Horizontal">
+
+                    <Button
+                x:Name="BackButton"
+                Margin="12 0 0 0"
+                Background="White"
+                Padding="4"
+                Click="BackButton_Click"
+                BorderThickness="0"
+                BorderBrush="Transparent"
+                materialDesign:ButtonAssist.CornerRadius="4"
+                Style="{StaticResource MaterialDesignFlatAccentBgButton}">
+
+                        <Button.BitmapEffect>
+                            <DropShadowBitmapEffect 
+                        Color="#022B3A" 
+                        Direction="320" 
+                        Softness="1" 
+                        ShadowDepth="4" 
+                        Opacity="0.5" />
+                        </Button.BitmapEffect>
+
+                        <materialDesign:PackIcon 
+                    Kind="ChevronLeft"
+                    Width="24"
+                    Height="24"
+                    Foreground="#022B3A"               />
+                    </Button>
+
+                    <Label
+            Content="Add New Employee" 
+               FontWeight="Bold" 
+               HorizontalAlignment="Left"
+            Margin="12 0 0 0"
+               FontSize="24"
+                   Foreground="#022B3A"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="Stretch"
+               HorizontalContentAlignment="Center"/>
+
+                </StackPanel>
+
+                <Border 
+            Grid.Row="1"
+            Background="White"
+            CornerRadius="10" 
+            Margin="0 20 0 20"
+            Height="380"
+            Width="420">
+
+                    <Border.Effect>
+                        <DropShadowEffect 
+                    BlurRadius="10"
+                    Opacity="1"
+                    ShadowDepth="8"
+                    Color="LightGray"/>
+                    </Border.Effect>
+
+                    <StackPanel 
+                VerticalAlignment="Center">
+
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                    Grid.Column="0">
+
+                                <TextBox
+                x:Name="txtFirstName" 
+                Margin="0 20 0 0"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                materialDesign:HintAssist.Hint="First Name"
+                FontSize="12"
+                Padding="12 10 12 10"
+                Foreground="#022B3A"
+                FontWeight="Medium"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Center"
+                Width="180"/>
+
+                                <TextBox
+                x:Name="txtContactNo" 
+                Margin="0 20 0 0"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                materialDesign:HintAssist.Hint="Contact No."
+                FontSize="12"
+                Padding="12 10 12 10"
+                Foreground="#022B3A"
+                FontWeight="Medium"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Center"
+                Width="180"/>
+
+                                <DatePicker
+                x:Name="txtDateOfBirth" 
+                Margin="0 20 0 0"
+                Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                materialDesign:HintAssist.Hint="Date of Birth"
+                Padding="12 10 12 10"
+                Foreground="#022B3A"
+                FontWeight="Medium"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Center"    
+                Width="180"/>
+
+                                <PasswordBox
+                x:Name="txtPassword"
+                Margin="0 12 0 0"
+                VerticalContentAlignment="Center"
+                Width="180"
+                Padding="12 10 12 10"
+                FontSize="12"
+                HorizontalAlignment="Center"
+                Foreground="#022B3A"
+                FontWeight="Medium"
+                materialDesign:HintAssist.HelperTextFontSize="10"
+                materialDesign:HintAssist.Hint="Password"
+                materialDesign:HintAssist.Foreground="#022B3A"
+                Style="{StaticResource MaterialDesignOutlinedPasswordBox}"/>
+
+                            </StackPanel>
+
+                            <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                    Grid.Column="1">
+                                <TextBox
+                x:Name="txtLastName" 
+                Margin="0 20 0 0"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                materialDesign:HintAssist.Hint="Last Name"
+                FontSize="12"
+                Padding="12 10 12 10"
+                Foreground="#022B3A"
+                FontWeight="Medium"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Center"
+                Width="180"/>
+
+                                <TextBox
+                x:Name="txtEmail" 
+                Margin="0 20 0 0"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                materialDesign:HintAssist.Hint="Email"
+                FontSize="12"
+                Padding="12 10 12 10"
+                Foreground="#022B3A"
+                FontWeight="Medium"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Center"
+                Width="180"/>
+
+                                <TextBox
+                x:Name="txtJobTitle" 
+                Margin="0 20 0 0"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                materialDesign:HintAssist.Hint="Job Title"
+                FontSize="12"
+                Padding="12 10 12 10"
+                Foreground="#022B3A"
+                FontWeight="Medium"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Center"
+                Width="180"/>
+
+
+                                <PasswordBox
+                x:Name="txtConfirmPassword"
+                Margin="0 12 0 0"
+                VerticalContentAlignment="Center"
+                Width="180"
+                Padding="12 10 12 10"
+                FontSize="12"
+                HorizontalAlignment="Center"
+                Foreground="#022B3A"
+                FontWeight="Medium"
+                materialDesign:HintAssist.HelperTextFontSize="10"
+                materialDesign:HintAssist.Hint="Confirm Password"
+                materialDesign:HintAssist.Foreground="#022B3A"
+                Style="{StaticResource MaterialDesignOutlinedPasswordBox}"/>
+
+                            </StackPanel>
+
+                        </Grid>
+
+                        <ComboBox
+                x:Name="txtManagerID" 
+                Margin="0 20 0 0"
+                Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                materialDesign:HintAssist.Hint="Manager ID"
+                FontSize="12"
+                Padding="12 10 12 10"
+                Foreground="#022B3A"
+                        
+                FontWeight="Medium"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Center"
+                Width="180"/>
+
+                        <Button 
+                x:Name="AddEmployeeButton"
+                Content="Add"
+                HorizontalAlignment="Center"
+                Margin="0 30 0 20"
+                Padding="12 0 12 0"
+                FontSize="18"
+                    Foreground="White"
+                VerticalContentAlignment="Center"
+            VerticalAlignment="Center"
+                Click="AddEmployeeButton_Click"
+                BorderThickness="0"
+                FontWeight="Medium"
+                Background="#022B3A"
+                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                        </Button>
+
+                    </StackPanel>
+
+                </Border>
+
+            </Grid>
+
+        </ScrollViewer>
+        
+    </Grid>
+    
+</Page>

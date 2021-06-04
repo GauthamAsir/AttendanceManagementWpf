@@ -1,0 +1,208 @@
+﻿<Window x:Class="AttendanceManagementWPF.DashboardUserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AttendanceManagementWPF"
+        mc:Ignorable="d"
+        MinWidth="200"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Side Menu Start -->
+
+        <Grid Grid.Column="0" 
+              Background="#E3B0AC">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label 
+                x:Name="roleLabel"
+                Grid.Row="0" 
+                Content="User"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                FontSize="25"
+                Foreground="Black"
+                FontWeight="Bold"/>
+
+            <Grid Grid.Row="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0"
+                      MouseDown="selectItem"
+                      x:Name="dasboard_my_attendance">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:PackIcon
+                       Grid.Column="0"
+                        Margin="6 0 0 0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Kind="CalendarAdd" 
+                        Foreground="Black"
+                        Width="24"
+                        Height="24"/>
+                    
+                    <Label 
+                        Grid.Column="1" 
+                        Content="My Attendances"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="18"
+                        Foreground="Black"
+                        FontWeight="Medium"/>
+                </Grid>
+
+                <Grid Grid.Row="1"
+                      MouseDown="selectItem"
+                      x:Name="dasboard_my_leave">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:PackIcon
+                       Grid.Column="0"
+                        Margin="6 0 0 0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Kind="IdentificationCardOutline" 
+                        Foreground="Black"
+                        Width="24"
+                        Height="24"/>
+
+                    <Label 
+                        Grid.Column="1" 
+                        Content="My Leaves"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="18"
+                        Foreground="Black"
+                        FontWeight="Medium"/>
+                </Grid>
+
+                <Grid Grid.Row="2"
+                      MouseDown="selectItem"
+                      x:Name="dasboard_leave_approvals">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:PackIcon
+                       Grid.Column="0"
+                        Margin="6 0 0 0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Kind="PersonOutline" 
+                        Foreground="Black"
+                        Width="24"
+                        Height="24"/>
+
+                    <Label 
+                        Grid.Column="1" 
+                        Content="Leave Approvals"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="18"
+                        Foreground="Black"
+                        FontWeight="Medium"/>
+                </Grid>
+
+                <Grid Grid.Row="3"
+                      MouseDown="selectItem"
+                      x:Name="dasboard_attendance_approval">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:PackIcon
+                       Grid.Column="0"
+                        Margin="6 0 0 0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Kind="PersonBadgeOutline" 
+                        Foreground="Black"
+                        Width="24"
+                        Height="24"/>
+
+                    <Label 
+                        Grid.Column="1" 
+                        Content="Attendance Approvals"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="16"
+                        Foreground="Black"
+                        FontWeight="Medium"/>
+                </Grid>
+
+                <Grid Grid.Row="5"
+                      x:Name="logout_menu_item"
+                      MouseDown="selectItem">
+                    <Grid.Background>
+                        <SolidColorBrush Color="White" Opacity="0.0"/>
+                    </Grid.Background>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <materialDesign:PackIcon
+                       Grid.Column="0"
+                        Margin="6 0 0 0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Kind="Logout" 
+                        Foreground="Black"
+                        Width="24"
+                        Height="24"/>
+
+                    <Label Grid.Column="1" Content="Log Out"
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center"
+                   FontSize="18"
+                   Foreground="Black"
+                   FontWeight="Medium"/>
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+
+        <!-- Side Menu End -->
+
+
+        <!-- Content -->
+        <Frame x:Name="frame" 
+               Grid.Column="1" 
+               Padding="0"
+                   MinWidth="200"
+               Background="White"
+               HorizontalAlignment="Stretch" 
+               VerticalAlignment="Stretch" 
+               Navigating="frameNavigation"
+               NavigationUIVisibility="Hidden"/>
+
+    </Grid>
+</Window>

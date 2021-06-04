@@ -1,0 +1,101 @@
+﻿<Window x:Class="AttendanceManagementWPF.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AttendanceManagementWPF"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Title="" 
+        Width="340"
+        Background="#022B3A" MinHeight="500" 
+        MinWidth="340">
+
+    <StackPanel
+        VerticalAlignment="Center">
+
+        <Label 
+            Content="Employee Attendance Management"
+            Foreground="White"
+            FontSize="18"
+            FontWeight="Bold"
+            HorizontalAlignment="Center"/>
+
+        <Border Background="White" Margin="20" 
+            CornerRadius="20" 
+            Width="240"
+            Height="420">
+            <StackPanel
+                Width="210"
+            Margin="20" VerticalAlignment="Center">
+                <Label Content="Login" 
+               FontWeight="Bold" 
+               FontSize="24"
+                   Foreground="#022B3A"
+               HorizontalAlignment="Center"/>
+                <Separator Width="200" HorizontalAlignment="Center"/>
+                <TextBox
+                x:Name="txtEmployeeID" 
+                Margin="0 20 0 0"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                materialDesign:HintAssist.Hint="Employee ID"
+                FontSize="12"
+                Padding="12 10 12 10"
+                Foreground="#022B3A"
+                FontWeight="Medium"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Center"
+                Width="180">
+                </TextBox>
+                <PasswordBox
+                x:Name="txtPassword"
+                Margin="0 12 0 0"
+                VerticalContentAlignment="Center"
+                Width="180"
+                Padding="12 10 12 10"
+                FontSize="12"
+                HorizontalAlignment="Center"
+                Foreground="#022B3A"
+                FontWeight="Medium"
+                materialDesign:HintAssist.HelperTextFontSize="10"
+                materialDesign:HintAssist.Hint="Password"
+                materialDesign:HintAssist.Foreground="#022B3A"
+                Style="{StaticResource MaterialDesignOutlinedPasswordBox}">
+
+                </PasswordBox>
+                <Button 
+                x:Name="submitButton"
+                Content="Submit"
+                HorizontalAlignment="Center"
+                Margin="0 20 0 0"
+                Padding="12 0 12 0"
+                FontSize="18"
+                VerticalContentAlignment="Center"
+                Click="submitButton_Click"
+                BorderThickness="0"
+                FontWeight="Medium"
+                Background="#022B3A"
+                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                </Button>
+
+                <Button 
+                Click="registerEmployee"
+                Margin="0 30 0 0"
+                FontSize="10"
+                Padding="0"
+                Foreground="#022B3A"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                    Style="{StaticResource MaterialDesignFlatButton}">
+                    <TextBlock TextAlignment="Center">
+                    Don't have an account?<LineBreak/>
+                    Register Here.</TextBlock>
+                </Button>
+            </StackPanel>
+        </Border>
+
+    </StackPanel>
+    
+</Window>

@@ -1,0 +1,156 @@
+﻿<Window x:Class="AttendanceManagementWPF.WelcomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AttendanceManagementWPF"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        mc:Ignorable="d"
+        Title=""
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="Manual"
+        Background="#022B3A"
+        Height="450" Width="800">
+
+    <Window.Resources>
+        <Storyboard x:Key="fade" 
+                    TargetProperty="Opacity">
+            <DoubleAnimation  
+                Storyboard.TargetProperty="Opacity" 
+                From="0" To="1" Duration="0:0:1" />
+        </Storyboard>
+
+        <Storyboard x:Key="transformEllipse">
+            <DoubleAnimation 
+                Storyboard.TargetProperty="(FrameworkElement.Width)"
+                From="0" To="75.0" />
+            <DoubleAnimation 
+                Storyboard.TargetProperty="(FrameworkElement.Height)"
+                From="0" To="75.0" />
+
+        </Storyboard>
+
+    </Window.Resources>
+    
+    <Grid 
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid
+            Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <Canvas 
+            Grid.Column="0"
+            Width="600">
+
+                <Ellipse
+                    x:Name="circle1"
+                    Canvas.Top="20"
+                    Canvas.Left="100"
+                    Fill="#007bff"
+                    Height="0"
+                    Width="0"/>
+
+                <Ellipse
+                    x:Name="circle2"
+                    Canvas.Top="90"
+                    Canvas.Left="-30"
+                    Fill="#1ec93d"
+                    Height="0"
+                    Width="0"/>
+
+                <Label 
+                    x:Name="welcome"
+                    Visibility="Hidden"
+                    Canvas.Top="50"
+                    Canvas.Left="0"
+                    Foreground="White"
+                    Content="Welcome"
+                    FontSize="28"
+                    FontWeight="Bold"/>
+
+                <Label 
+                    x:Name="empName"
+                    Canvas.Top="80"
+                    Content=""
+                    Foreground="White"
+                    FontSize="36"
+                    FontWeight="Bold"/>
+
+            </Canvas>
+
+            <StackPanel
+                x:Name="stackTitle"
+                Visibility="Hidden"
+                Grid.Column="1">
+
+                <Label 
+                    Grid.Column="1"
+                    FontSize="28"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Padding="6 6 6 0"
+                    HorizontalContentAlignment="Center"
+                    Content="Employee Attendance"/>
+                
+                <Label 
+                    Grid.Column="1"
+                    FontSize="28"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Padding="6 0 6 6"
+                    HorizontalContentAlignment="Center"
+                    Content="Management"/>
+
+                <Image Width="75">
+                    <Image.Source>
+                        <BitmapImage 
+                            DecodePixelWidth="75" 
+                            UriSource="/images/attendance.png" />
+                    </Image.Source>
+                </Image>
+
+            </StackPanel>
+
+        </Grid>
+
+        <Grid
+            Grid.Row="1">
+
+            <Button 
+                x:Name="Continue"
+                Content="Continue"
+                HorizontalAlignment="Center"
+                Margin="0 30 0 20"
+                Padding="12 0 12 0"
+                Visibility="Hidden"
+                Width="250"
+                FontSize="18"
+                Foreground="White"
+                VerticalContentAlignment="Center"
+                VerticalAlignment="Center"
+                Click="Continue_Click"
+                BorderThickness="0"
+                FontWeight="Medium"
+                Background="#007bff"
+                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+            </Button>
+
+        </Grid>
+
+    </Grid>
+</Window>
